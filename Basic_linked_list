@@ -1,0 +1,49 @@
+#include <stdio.h>
+int data[10];
+int pointer[10] = {-1};
+int head = 0;
+int free_index = 0;
+
+int append_to_list(int data_to_be_added){
+    int current = head;
+    data[free_index] = data_to_be_added;
+    pointer[free_index] = -1;
+    
+    if (free_index == head){
+        free_index ++;
+    } else {
+        while (pointer[current] != -1){
+        current = pointer[current];
+        if (pointer[current]==-1){
+            pointer[current] = free_index;
+            free_index ++;
+            return 0;
+        }
+    }
+    }
+    return 1;
+}
+
+int check_cycle(){
+    int slow = head;
+    int fast = head;
+    
+    while (pointer[fast] != -1 && pointer[pointer[fast]] != -1){
+        slow = pointer[slow];
+        fast = pointer[pointer[fast]];
+        if (slow == fast){
+            printf("Loop detected!!");
+            return 0;
+        }
+    }
+    return 1;
+}
+int main(){
+    int current = head;
+    append_to_list(20);
+    append_to_list(20);
+    while (pointer[current] != -1){
+        printf("%d \n", data[current]);
+        current = pointer[current];
+    }
+}
